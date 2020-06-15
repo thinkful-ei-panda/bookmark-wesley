@@ -1,0 +1,138 @@
+*{
+    box-sizing: border-box;
+    margin:auto;    
+}
+
+a{
+    text-decoration: none;
+}
+
+header{
+    text-align: center;
+    font-family: 'MuseoModerno', cursive;
+    background-color: #142459;    
+    height:70px;
+    text-shadow: 2px 2px #ff9100;
+    color:#66fbfb;
+}
+
+body{
+    margin:auto;
+    width:100%;
+    font-family: 'Open Sans', sans-serif;
+    background-color: #000030;
+    color:#66fbfb;
+    text-shadow: 1px 1px #ff9100;
+}
+
+main{
+    margin:auto;
+}
+
+fieldset{
+    border:none;
+}
+
+fieldset div{
+    padding: 4px;
+}
+
+#cancel-error{
+    border-radius: 50%;
+}
+
+.bookmark-listing,.bookmark-expanded-header,button{
+    cursor:pointer;
+}
+
+.bookmark-listing{    
+    border:solid white 1px;
+    padding: 5px 5px;
+}
+
+.bookmark-info{
+    border:solid white 1px;
+    padding: 5px 5px 15px 5px;
+    background-color: #454b86;
+}
+
+.bookmark-listing>div{
+    display:inline-block;
+    width:49%;
+}
+
+.bookmark-rating,.delete-button-container{
+    text-align: right;
+}
+
+code{
+    color:red;
+    font-size: 30px;
+}
+
+.bookmark-expanded-header{
+    background-color: #142459;   
+    padding:5px 5px;
+}
+
+.bookmark-expanded-header div{
+    display:inline-block;
+    width:49%
+}
+
+.visit-site{
+    display:inline-block;
+    border:1px solid black;    
+    padding: 5px 5px;
+    background-color: #062474;
+    border-radius: 6px;
+    color:#66fbfb;   
+}
+
+.bookmark-rating-expanded{
+    display:inline-block;
+}
+
+.new-bookmark, .add-bookmark-submit, .add-bookmark-cancel, .bookmark-delete-button{
+    background-color: #062474;
+    border-radius: 6px;
+    margin: 4px;
+    font-size:14px;
+    color:#66fbfb;    
+}
+
+.bookmark-name-expanded{
+    font-size:24px;
+}
+
+.sort-container{
+    padding:10px 0px;
+}
+
+.adding-form{
+    width:325px;
+    margin:auto;
+}
+
+.add-bookmark-cancel{
+    margin-left:40px;
+}
+
+.add-bookmark-cancel,.add-bookmark-submit{
+    font-size: 20px;
+}
+
+.img-container{
+    width:200px;
+}
+
+img{
+    width:100%;
+}
+
+@media (min-width:700px){
+    main{
+        width:65%;
+
+    }
+}
