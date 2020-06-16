@@ -56,7 +56,7 @@ fieldset div{
     background-color: #454b86;
 }
 
-.bookmark-listing>div{
+.bookmark-listing li div{
     display:inline-block;
     width:49%;
 }
@@ -135,4 +135,12 @@ img{
         width:65%;
 
     }
+}
+
+li{
+    list-style:none;
+}
+
+.expanded-listing,.results-container{
+    padding-left:0;
 }

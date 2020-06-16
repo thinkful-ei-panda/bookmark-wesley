@@ -102,8 +102,8 @@ let generateListViewHtml=function(){
             </div>
             <div>
               <form action="/action_page.php">
-                  <label for="stars">Filter by Rating:</label>
-                  <select name="stars" id="stars-select">
+                  <label for="stars-select">Filter by Rating:</label>
+                  <select name="stars-select" id="stars-select">
                   <option value="" disabled selected>${filterRating}</option>
                   <option value=5>5</option>
                   <option value=4>4+</option>
@@ -114,31 +114,31 @@ let generateListViewHtml=function(){
               </form>
             </div>
           </div>
-          <div class='results-container'>${itemHtml}</div>`;
+          <ul class='results-container'>${itemHtml}</ul>`;
 };
 
 //generate html for one item
 let generateItemHtml=function(item){
   if (item.expanded===true){
-    return `<div class='expanded-listing' id=${item.id}>
-                <div class='bookmark-expanded-header'>
-                    <div class='bookmark-name-expanded'>${item.title}</div>
-                    <div class='delete-button-container'>
-                        <button class='bookmark-delete-button'>Delete</button>
-                    </div>
-                </div>
-                <section class='bookmark-info'>
-                    <a class='visit-site' href='${item.url}' target="_blank">Visit Site</a>
-                    <div class='bookmark-rating-expanded'>Rating: ${item.rating}</div>
-                    <div class='bookmark-description'>${item.desc}</div>                    
-                </section>
-
-            </div>`;
+    return `<li class='expanded-listing' tabindex='0' id=${item.id}>
+              <div class='bookmark-expanded-header'>
+                  <div class='bookmark-name-expanded'>${item.title}</div>
+                  <div class='delete-button-container'>
+                      <button class='bookmark-delete-button'>Delete</button>
+                  </div>
+              </div>
+              <section class='bookmark-info'>
+                  <a class='visit-site' href='${item.url}' target="_blank">Visit Site</a>
+                  <div class='bookmark-rating-expanded'>Rating: ${item.rating}</div>
+                  <div class='bookmark-description'>${item.desc}</div>                    
+              </section>
+            </li>`;
   } else{
-    return `<div class='bookmark-listing' id=${item.id}>
+    return `<li class='bookmark-listing' tabindex='0' id=${item.id}>            
                 <div class='bookmark-name'>${item.title}</div>
                 <div class='bookmark-rating'>Rating: ${item.rating}</div>
-            </div>`;        
+            </li>`;
+                    
   }
 };
 
@@ -171,30 +171,43 @@ let handleExpandBookmark=function(){
     const id=getIdByElement(event.currentTarget);
     
     //toggle off previously expanded if there was one
-    if(store.bookmarks.find(bookmark => bookmark.expanded===true)){
-      (store.bookmarks.find(bookmark => bookmark.expanded===true).expanded)=false;
+    if(store.bookmarks.find(bookmark => bookmark.expanded===true)){      
+      store.bookmarks.find(bookmark => bookmark.expanded===true).expanded=false;
     }
 
     //expand target bookmark
     store.findById(id).expanded=!(store.findById(id).expanded);
     render();
-  });
+  })
+    .on('keypress','.bookmark-listing', function(e) {
+      if(e.which === 13) {
+        $(this).trigger( 'click' );
+      }
+    });
 };
 
 //Expanded Bookmark Events
 //event listener for deleting bookmark
-let handleDeleteBookmark=function(){
+let handleDeleteBookmark=function(){  
   $('main').on('click','.bookmark-delete-button', event => {
     event.stopPropagation();
     let id=$(event.currentTarget.closest('.expanded-listing')).attr('id');
     let bookmark=store.findById(id);
     api.deleteBookmarkFromApi(id)
-      .then(result => result.json())
       .then(() => {
         store.deleteBookmarkFromStore(bookmark);
         render();
+      })
+      .catch(error => {
+        store.error=error;
+        renderError();
       });      
-  });
+  })
+    .on('keypress','.bookmark-delete-button', function(e) {
+      if(e.which === 13) {
+        $(this).trigger( 'click' );
+      }
+    });
 };
 
 //event listener for condensing each bookmark (optional)
@@ -204,7 +217,12 @@ let handleCondenseBookmark=function(){
     const id=getIdByElement(event.currentTarget);
     store.findById(id).expanded=!(store.findById(id).expanded);
     render();
-  });
+  })
+    .on('keypress','.expanded-listing', function(e) {
+      if(e.which === 13) {
+        $(this).trigger( 'click' );
+      }
+    });
 };
 
 //Add Bookmark Events
